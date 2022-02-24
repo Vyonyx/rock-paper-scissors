@@ -1,20 +1,23 @@
-function computerPlay() {
-  let options = ["rock", "paper", "scissors"];
-  let choice = Math.floor(Math.random(options) * options.length);
-  return options[choice]
+function getComputerMove() {
+  // Randomly select a move for the computer.
+  let moveList = ["rock", "paper", "scissors"];
+  let randomChoice = Math.floor(Math.random(moveList) * moveList.length);
+  return moveList[randomChoice]
 }
 
-function playerPlay() {
+function getPlayerMove() {
+  // Ask the player what they would like to choose for their move.
   let playerChoice = prompt("Would you like to pick 'Rock', 'Paper' or 'Scissors'?").toLowerCase();
   if (playerChoice == "rock" || playerChoice == "paper" || playerChoice == "scissors") {
     return playerChoice
   } else {
     alert(`"${playerChoice}" is not a valid choice, please choose again.`);
-    return playerPlay()
+    return getPlayerMove()
   }
 }
 
-function winnerIs(playerMove, computerMove) {
+function getWinner(playerMove, computerMove) {
+  // Determine and return who the winner is.
   if (playerMove == "rock" && computerMove == "scissors") {
     return "player"
   } else if (playerMove == "scissors" && computerMove == "paper") {
@@ -28,17 +31,15 @@ function winnerIs(playerMove, computerMove) {
   }
 }
 
-function playRound() {
-  let playerSelection = playerPlay();
-  let computerSelection = computerPlay();
+function alertWinner(winner, playerSelection, computerSelection) {
+  // Alert player as to who has won the round.
 
-  console.log(`Player: ${playerSelection} - Computer: ${computerSelection}.`);
-
-  let winner = winnerIs(playerSelection, computerSelection);
-
-  let computerChoice = computerSelection[0].toLocaleUpperCase() + computerSelection.slice(1);
-  let playerChoice = playerSelection[0].toUpperCase() + playerSelection.slice(1);
-
+  // Formatting the player and computer move strings to have a capital letter.
+  let computerChoice = computerSelection[0].toLocaleUpperCase() +
+      computerSelection.slice(1);
+  let playerChoice = playerSelection[0].toUpperCase() +
+      playerSelection.slice(1);
+  // Alert logic.
   if (winner == "player") {
     alert(`You win! ${playerChoice} beats ${computerChoice}.`);
   } else if (winner == "computer") {
@@ -46,10 +47,23 @@ function playRound() {
   } else if (winner == "draw") {
     alert("This game is a draw!");
   }
+}
+
+function playRound() {
+  // Play one round Rock, Paper, Scissors.
+  let playerSelection = getPlayerMove();
+  let computerSelection = getComputerMove();
+  // Track what each play played in the console.
+  console.log(`Player: ${playerSelection} - Computer: ${computerSelection}.`);
+  // Variable returns who the winner is as a string.
+  // String can then be used to add to play/computer scores, etc.
+  let winner = getWinner(playerSelection, computerSelection);
+  // Alert winner.
+  alertWinner(winner, playerSelection, computerSelection);
   return winner
 }
 
-function game() {
+function playGame() {
   let playerScore = 0;
   let computerScore = 0;
   const maxRounds = 9;
@@ -71,4 +85,4 @@ function game() {
 }
 
 
-game()
+playGame()
