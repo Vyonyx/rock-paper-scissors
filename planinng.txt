@@ -1,0 +1,14 @@
+Rock Paper Scissors
+
+Understanding the problem:
+Two players make a decision between either rock, paper or scissors for their
+turn. If both players make the same decision, the game is a draw, otherwise rock
+beats scissors, scissors beats paper and finally paper beats rock.
+
+Planinng:
+Player decision.
+Computer decision.
+Compare decisions.
+Update game outcome.
+Keep track of player and computer scores.
+Keep track of turn number.
