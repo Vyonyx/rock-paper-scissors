@@ -49,40 +49,90 @@ function alertWinner(winner, playerSelection, computerSelection) {
   }
 }
 
-function playRound() {
+let playerScore = 0;
+let computerScore = 0;
+
+function playRound(move) {
   // Play one round Rock, Paper, Scissors.
-  let playerSelection = getPlayerMove();
+  let playerSelection = move;
   let computerSelection = getComputerMove();
+
   // Track what each play played in the console.
-  console.log(`Player: ${playerSelection} - Computer: ${computerSelection}.`);
+  // console.log(`Player: ${playerSelection} - Computer: ${computerSelection}.`);
+
   // Variable returns who the winner is as a string.
   // String can then be used to add to play/computer scores, etc.
   let winner = getWinner(playerSelection, computerSelection);
-  // Alert winner.
-  alertWinner(winner, playerSelection, computerSelection);
-  return winner
+
+  if (winner === 'player') playerScore += 1;
+  else if (winner === "computer") computerScore += 1;
+
+  console.log(`Player: ${playerSelection}, Computer: ${computerSelection}, Winner: ${winner}`);
+
+  return(winner);
 }
 
-function playGame() {
-  let playerScore = 0;
-  let computerScore = 0;
-  const maxRounds = 9;
+// function playGame() {
+//   let playerScore = 0;
+//   let computerScore = 0;
+//   const maxRounds = 9;
+//
+//   let roundWinner = playRound();
+//   if (roundWinner == "player") {
+//     playerScore += 1;
+//   } else if (roundWinner == "computer") {
+//     computerScore += 1;
+//     }
+//   scoreMessage = `You scored: ${playerScore}. The computer scored: ${computerScore}`;
+//   if (playerScore > computerScore) {
+//     alert(`You win! ${scoreMessage}`)
+//   } else {
+//     alert(`You lose! ${scoreMessage}`)
+//   }
+// }
 
-  for (i = 0; i < maxRounds; i++) {
-    let roundWinner = playRound();
-    if (roundWinner == "player") {
-      playerScore += 1;
-    } else if (roundWinner == "computer") {
-      computerScore += 1;
-    }
-  }
-  scoreMessage = `You scored: ${playerScore}. The computer scored: ${computerScore}`;
-  if (playerScore > computerScore) {
-    alert(`You win! ${scoreMessage}`)
+const buttons = document.createElement('div');
+buttons.style.display = 'flex';
+buttons.style.justifyContent = 'center';
+
+const rockBtn = document.createElement('button');
+const paperBtn = document.createElement('button');
+const scissorsBtn = document.createElement('button');
+
+rockBtn.textContent = 'Rock';
+paperBtn.textContent = 'Paper';
+scissorsBtn.textContent = 'Scissors';
+
+rockBtn.addEventListener('click', () => {
+  winner = playRound('rock');
+  console.log(winner);});
+paperBtn.addEventListener('click', () => {
+  winner = playRound('paper');
+  console.log(winner);});
+scissorsBtn.addEventListener('click', () => {
+  winner = playRound('scissors');
+  console.log(winner);});
+
+const scoreBoard =  document.createElement('p');
+scoreBoard.textContent = `Player: ${playerScore}, Computer: ${computerScore}`;
+
+function gameScore() {
+  if (playerScore > 4) {
+    scoreBoard.textContent = 'Game over. You win';
+  } else if (computerScore > 4) {
+    scoreBoard.textContent = 'Game over. You lose';
   } else {
-    alert(`You lose! ${scoreMessage}`)
+    scoreBoard.textContent = `Player: ${playerScore}, Computer: ${computerScore}`;
   }
 }
 
+rockBtn.addEventListener('click', gameScore);
+paperBtn.addEventListener('click', gameScore);
+scissorsBtn.addEventListener('click', gameScore);
 
-playGame()
+buttons.appendChild(rockBtn);
+buttons.appendChild(paperBtn);
+buttons.appendChild(scissorsBtn);
+
+document.body.appendChild(buttons);
+document.body.appendChild(scoreBoard);
